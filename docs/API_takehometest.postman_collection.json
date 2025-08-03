@@ -1,0 +1,224 @@
+{
+  "info": {
+    "_postman_id": "b2e3f7c1-9a4b-4e9e-8e7f-3b2c6d8e9f1a",
+    "name": "BantuDigital Take-Home Test API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nama\": \"Test User\",\n    \"email\": \"testuser@example.com\",\n    \"kata_sandi\": \"password123\",\n    \"kata_sandi_confirmation\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/register",
+              "host": ["{{base_url}}"],
+              "path": ["register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"token\", pm.response.json().token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"testuser@example.com\",\n    \"kata_sandi\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": ["{{base_url}}"],
+              "path": ["login"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Artikel",
+      "item": [
+        {
+          "name": "Daftar Artikel",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/artikel?search=kata_kunci",
+              "host": ["{{base_url}}"],
+              "path": ["artikel"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "kata_kunci",
+                  "description": "Cari berdasarkan judul atau isi"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Detail Artikel",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/artikel/1",
+              "host": ["{{base_url}}"],
+              "path": ["artikel", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buat Artikel",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"judul\": \"Artikel Baru\",\n    \"isi\": \"Ini adalah isi artikel baru.\",\n    \"kategori_id\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/artikel",
+              "host": ["{{base_url}}"],
+              "path": ["artikel"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Perbarui Artikel",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"judul\": \"Artikel Diperbarui\",\n    \"isi\": \"Ini adalah isi artikel yang diperbarui.\",\n    \"kategori_id\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/artikel/1",
+              "host": ["{{base_url}}"],
+              "path": ["artikel", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Hapus Artikel",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/artikel/1",
+              "host": ["{{base_url}}"],
+              "path": ["artikel", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ]
+}
